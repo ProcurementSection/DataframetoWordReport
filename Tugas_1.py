@@ -168,6 +168,7 @@ def display_filtered_data(df):
         st.write("Summary:")
         st.dataframe(summary_df)
         
+        input_deptmanager = st.text_input('Input Department Manager Name')
         input_data = st.text_input('Input Nomor Surat')
         selected_date = st.date_input('Input Tanggal')
         tahun_fiskal = st.text_input('Input Tahun Fiskal')
@@ -229,6 +230,8 @@ def display_filtered_data(df):
                     paragraph.text = paragraph.text.replace('(bintang)', "(*) Item penilaian yang belum memenuhi target mohon dapat ditingkatkan.")
                 else : 
                     paragraph.text = paragraph.text.replace('(bintang)', "")
+            if "(dept_manager)" in paragraph.text:
+                paragraph.text = paragraph.text.replace("(dept_manager)", input_deptmanager)
         
         
 # Load data from the uploaded file
@@ -247,10 +250,3 @@ if uploaded_file is not None:
             doc.save(byte_io)
             byte_io.seek(0)
             st.download_button(label="Download Here", data=byte_io, file_name="Result.docx")
-
-st.write(
-    '<div style="position: fixed; bottom: 10px; right: 10px;">'
-    '© 2023 Irwanda B. Matematika ITS.'
-    '</div>',
-    unsafe_allow_html=True
-)
